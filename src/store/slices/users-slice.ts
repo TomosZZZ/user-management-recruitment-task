@@ -8,9 +8,8 @@ interface usersState {
 	error: string
 }
 
-type filterOptions = 'name' | 'username' | 'email' | 'phone'
 
-type filterPayload = {
+type usersFilter = {
 	name: string
 	username: string
 	email: string
@@ -43,7 +42,7 @@ export const usersSlice = createSlice({
 			state.filteredUsers = []
 			state.error = action.payload
 		},
-		filter: (state, action: PayloadAction<filterPayload>) => {
+		filter: (state, action: PayloadAction<usersFilter>) => {
 			state.filteredUsers = state.users.filter(
 				user =>
 					user.name
@@ -57,33 +56,6 @@ export const usersSlice = createSlice({
 						.includes(action.payload.email.toLowerCase()) &&
 					user.phone.toLowerCase().includes(action.payload.phone.toLowerCase())
 			)
-		},
-		filters: (
-			state,
-			action: PayloadAction<{ options: filterOptions; filter: string }>
-		) => {
-			switch (action.payload.options) {
-				case 'name':
-					state.filteredUsers = state.users.filter(user =>
-						user.name.includes(action.payload.filter)
-					)
-					break
-				case 'username':
-					state.filteredUsers = state.users.filter(user =>
-						user.username.includes(action.payload.filter)
-					)
-					break
-				case 'email':
-					state.filteredUsers = state.users.filter(user =>
-						user.email.includes(action.payload.filter)
-					)
-					break
-				case 'phone':
-					state.filteredUsers = state.users.filter(user =>
-						user.phone.includes(action.payload.filter)
-					)
-					break
-			}
 		},
 	},
 })
