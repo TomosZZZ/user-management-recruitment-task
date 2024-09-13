@@ -3,6 +3,8 @@ import { filter } from '@/store/slices/users-slice'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+const INPUT_FILTERS_NAMES = ['name', 'username', 'email', 'phone'] as const
+
 const UsersTableFilter = () => {
 	const dispatch = useDispatch()
 	const [appliedFilter, setAppliedFilter] = useState({
@@ -16,7 +18,6 @@ const UsersTableFilter = () => {
 		dispatch(filter(appliedFilter))
 	}, [dispatch, appliedFilter])
 
-	
 	const onSearch = useCallback(
 		(field: keyof typeof appliedFilter) =>
 			(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,11 +30,15 @@ const UsersTableFilter = () => {
 	)
 
 	return (
-		<div className='flex gap-4'>
-			<Input onChange={onSearch('name')} placeholder='Search users' />
-			<Input onChange={onSearch('username')} placeholder='Search username' />
-			<Input onChange={onSearch('email')} placeholder='Search email' />
-			<Input onChange={onSearch('phone')} placeholder='Search phone' />
+		<div className='flex flex-wrap md:flex-nowrap justify-center gap-4'>
+			{INPUT_FILTERS_NAMES.map(filterName => (
+				<Input
+					key={filterName}
+					className='w-[45%] md:w-[25%]'
+					onChange={onSearch(filterName)}
+					placeholder={`Search ${filterName}`}
+				/>
+			))}
 		</div>
 	)
 }
