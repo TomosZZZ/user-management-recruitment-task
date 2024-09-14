@@ -1,22 +1,8 @@
 import { User } from '@/feature/users/types/User'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { UsersFilter, UsersState } from '../types/user-store-types'
 
-interface usersState {
-	users: User[]
-	filteredUsers: User[]
-	loading: boolean
-	error: string
-}
-
-
-type usersFilter = {
-	name: string
-	username: string
-	email: string
-	phone: string
-}
-
-const initialState: usersState = {
+const initialState: UsersState = {
 	users: [],
 	filteredUsers: [],
 	loading: false,
@@ -42,7 +28,7 @@ export const usersSlice = createSlice({
 			state.filteredUsers = []
 			state.error = action.payload
 		},
-		filter: (state, action: PayloadAction<usersFilter>) => {
+		filter: (state, action: PayloadAction<UsersFilter>) => {
 			state.filteredUsers = state.users.filter(
 				user =>
 					user.name
@@ -66,4 +52,5 @@ export const {
 	fetchUsersFailure,
 	filter,
 } = usersSlice.actions
-export default usersSlice.reducer
+
+export const usersReducer = usersSlice.reducer

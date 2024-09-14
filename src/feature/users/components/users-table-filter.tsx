@@ -1,11 +1,11 @@
-import { Input } from '@/components/ui/input'
+import { Input } from '@/design-system/ui/input'
 import { filter } from '@/store/slices/users-slice'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 const INPUT_FILTERS_NAMES = ['name', 'username', 'email', 'phone'] as const
 
-const UsersTableFilter = () => {
+export const UsersTableFilter = () => {
 	const dispatch = useDispatch()
 	const [appliedFilter, setAppliedFilter] = useState({
 		name: '',
@@ -42,5 +42,3 @@ const UsersTableFilter = () => {
 		</div>
 	)
 }
-
-export default UsersTableFilter
